@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pokedex/servicio/pokedexServicio.dart';
 import 'package:pokedex/vista/informacion.dart';
+import 'package:pokedex/modelo/ThemeProvider.dart'; // Ensure this path is correct
+import 'package:provider/provider.dart';
 
 class Lista extends StatefulWidget {
   const Lista({super.key});
@@ -93,6 +95,7 @@ class _ListaViewState extends State<Lista> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     List<Pokemon> paginatedPokemons =
         _filteredPokemons
             .skip(_currentPage * _itemsPerPage)
@@ -100,12 +103,24 @@ class _ListaViewState extends State<Lista> {
             .toList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Pokédex'),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      ),
+      appBar: AppBar(title: Text('Pokédex')),
       body: Column(
         children: [
+          if (!themeProvider.isDarkMode)
+            ElevatedButton(
+              onPressed: () {
+                themeProvider.setThemeMode(ThemeMode.dark);
+              },
+              child: Text('Activar Modo Oscuro'),
+            ),
+          // Muestra el botón solo si el modo oscuro está activado
+          if (themeProvider.isDarkMode)
+            ElevatedButton(
+              onPressed: () {
+                themeProvider.setThemeMode(ThemeMode.light);
+              },
+              child: Text('Activar Modo Claro'),
+            ),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextField(

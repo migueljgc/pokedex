@@ -4,7 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 
 class InformacionVista extends StatelessWidget {
   final Pokemon pokemon;
-  const InformacionVista({Key? key, required this.pokemon}) : super(key: key);
+  const InformacionVista({super.key, required this.pokemon});
 
   @override
   Widget build(BuildContext context) {
