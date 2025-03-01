@@ -118,20 +118,25 @@ class _ListaViewState extends State<Lista> {
               );
             },
           ),
-          if (!themeProvider.isDarkMode)
-            ElevatedButton(
-              onPressed: () {
-                themeProvider.setThemeMode(ThemeMode.dark);
-              },
-              child: Text('Activar Modo Oscuro'),
-            ),
-          if (themeProvider.isDarkMode)
-            ElevatedButton(
-              onPressed: () {
-                themeProvider.setThemeMode(ThemeMode.light);
-              },
-              child: Text('Activar Modo Claro'),
-            ),
+
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) {
+              return ElevatedButton(
+                onPressed: () {
+                  final newMode =
+                      themeProvider.isDarkMode
+                          ? ThemeMode.light
+                          : ThemeMode.dark;
+                  themeProvider.setThemeMode(newMode);
+                },
+                child: Text(
+                  themeProvider.isDarkMode
+                      ? "Activar Modo claro"
+                      : "Activar Modo Oscuro",
+                ),
+              );
+            },
+          ),
         ],
       ),
       body: Column(
