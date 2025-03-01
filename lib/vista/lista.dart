@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pokedex/servicio/pokedexServicio.dart';
+import 'package:pokedex/vista/favoritos.dart';
 import 'package:pokedex/vista/informacion.dart';
 import 'package:pokedex/modelo/ThemeProvider.dart'; // Ensure this path is correct
 import 'package:provider/provider.dart';
@@ -103,9 +104,20 @@ class _ListaViewState extends State<Lista> {
             .toList();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Pokédex')),
-      body: Column(
-        children: [
+      appBar: AppBar(
+        title: Text('Pokédex'),
+        actions: [
+          // Ícono de estrella en el AppBar
+          IconButton(
+            icon: Icon(Icons.star), // Ícono de estrella
+            onPressed: () {
+              // Navegar a la nueva pantalla
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Favoritos()),
+              );
+            },
+          ),
           if (!themeProvider.isDarkMode)
             ElevatedButton(
               onPressed: () {
@@ -113,7 +125,6 @@ class _ListaViewState extends State<Lista> {
               },
               child: Text('Activar Modo Oscuro'),
             ),
-          // Muestra el botón solo si el modo oscuro está activado
           if (themeProvider.isDarkMode)
             ElevatedButton(
               onPressed: () {
@@ -121,6 +132,10 @@ class _ListaViewState extends State<Lista> {
               },
               child: Text('Activar Modo Claro'),
             ),
+        ],
+      ),
+      body: Column(
+        children: [
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextField(

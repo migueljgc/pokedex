@@ -8,6 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox('pokemonBox'); // Abre una caja de Hive
+  await Hive.openBox<List>('favoritos'); // Caja para almacenar favoritos
   runApp(
     ChangeNotifierProvider(create: (_) => ThemeProvider(), child: MyApp()),
   );
